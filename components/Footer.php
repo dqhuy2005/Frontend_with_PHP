@@ -1,0 +1,1 @@
+<!-- This is the footer component for the application. -->

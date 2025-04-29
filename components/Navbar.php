@@ -1,0 +1,1 @@
+<!-- This is the navbar component for the application. -->

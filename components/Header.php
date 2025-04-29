@@ -1,0 +1,1 @@
+<!-- This is the header component for the application. -->
