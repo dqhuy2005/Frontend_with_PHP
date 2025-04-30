@@ -11,7 +11,7 @@
     <body class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
         <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
             <h1 class="text-2xl font-bold text-center mb-6 text-gray-800">Đăng nhập</h1>
-            <form action="POST" class="space-y-4">
+            <form method="POST" class="space-y-4">
                 <div>
                     <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
                     <input type="text" id="username" name="username"
@@ -31,6 +31,40 @@
                 Chưa có tài khoản? <a href="/views/Register.php" class="text-blue-500 hover:underline">Đăng ký</a>
             </p>
         </div>
+        <?php
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $url = "http://localhost:8080/api/auth/login";
+
+            $data = [
+                "username" => $_POST['username'] ?? "",
+                "password" => $_POST['password'] ?? "",
+            ];
+
+            $options = [
+                "http" => [
+                    "header"  => "Content-Type: application/json",
+                    "method"  => "POST",
+                    "content" => json_encode($data)
+                ]
+            ];
+
+            $context = stream_context_create($options);
+            $response = @file_get_contents($url, false, $context);
+
+            if ($response === false) {
+                echo "<pre>";
+                echo $response;
+                echo "</pre>";
+                echo "<p class='text-red-500'>Không thể kết nối đến API.</p>";
+            } else {
+                $data = json_decode($response, true);
+                echo "<pre>";
+                print_r($data);
+                echo "</pre>";
+                header("Location: /public/index.php");
+            }
+        }
+        ?>
     </body>
 
     </html>
