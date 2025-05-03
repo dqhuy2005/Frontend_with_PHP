@@ -58,9 +58,6 @@
                 echo "<p class='text-red-500'>Không thể kết nối đến API.</p>";
             } else {
                 $data = json_decode($response, true);
-                echo "<pre>";
-                print_r($data);
-                echo "</pre>";
                 header("Location: /public/index.php");
             }
         }
